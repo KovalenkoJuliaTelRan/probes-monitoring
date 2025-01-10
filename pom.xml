@@ -77,4 +77,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<modules>
+		<module>analyzer</module>
+	</modules>
 </project>

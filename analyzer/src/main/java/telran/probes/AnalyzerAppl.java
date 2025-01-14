@@ -37,18 +37,19 @@ public class AnalyzerAppl {
 			long sensorId = probeData.id();
 			Range range = service.getRange(sensorId);
 			double value = probeData.value();
-			double border = Double.NaN;
+			double deviation = 0;
 			if (value < range.min())
-				border = range.min();
+				deviation = value - range.min();
 			else if (value > range.max())
-				border = range.max();
-			if (!Double.isNaN(border)) {
-				double deviation = value - border;
+				deviation = value - range.max();
+			if (deviation != 0) {
 				log.debug("deviation: {}", deviation);
 				DeviationData dataDeviation = new DeviationData(sensorId, deviation, value, 
 						System.currentTimeMillis());
 				bridge.send(producerBindingName, dataDeviation);
 				log.debug("deviation data {} sent to {}", dataDeviation, producerBindingName);
+			} else {
+				log.debug("Deviation not detected");
 			}
 		};
 	}

@@ -3,8 +3,6 @@ package telran.probes;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import telran.probes.dto.DeviationData;
@@ -37,11 +33,12 @@ class AnalyzerControllerTest {
 	InputDestination producer;
 	@Autowired
 	OutputDestination consumer;
+	@Autowired
 	ObjectMapper mapper;
 	
-	@Value("${app.analyzer.consumer.binding.name:analyzerConsumer-in-0}")
+	@Value("${app.analyzer.consumer.binding.name}")
 	String consumerBindingName;
-	@Value("${app.analyzer.producer.binding.name:analyzerProducer-in-0}")
+	@Value("${app.analyzer.producer.binding.name}")
 	String producerBindingName;
 	
 	private static final long SENSOR_ID = 123;
@@ -77,7 +74,7 @@ class AnalyzerControllerTest {
 		DeviationData deviation = mapper.readValue(message.getPayload(), DeviationData.class);
 		assertEquals(SENSOR_ID, deviation.id());
 		assertEquals(DEVIATION_GREATER_MAX, deviation.deviation());
-		assertEquals(MAX_VALUE, deviation.value());
+		assertEquals(VALUE_GREATER_MAX, deviation.value());
 	}
 
 	@Test
@@ -88,7 +85,7 @@ class AnalyzerControllerTest {
 		DeviationData deviation = mapper.readValue(message.getPayload(), DeviationData.class);
 		assertEquals(SENSOR_ID, deviation.id());
 		assertEquals(DEVIATION_LESS_MIN, deviation.deviation());
-		assertEquals(MIN_VALUE, deviation.value());
+		assertEquals(VALUE_LESS_MIN, deviation.value());
 	}
 
 	@Test

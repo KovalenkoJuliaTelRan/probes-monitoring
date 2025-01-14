@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import telran.probes.dto.DeviationData;
 import telran.probes.dto.ProbeData;
+import telran.probes.dto.Range;
 import telran.probes.service.RangeProviderClient;
 
 @SpringBootApplication
@@ -20,23 +22,34 @@ public class AnalyzerAppl {
 
 	@Value("${app.analyzer.producer.binding.name}")
 	String producerBindingName;
-	
-	final RangeProviderClient servise;
+
+	final RangeProviderClient service;
 	final StreamBridge bridge;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnalyzerAppl.class, args);
 	}
-	
+
 	@Bean
-	Consumer<ProbeData> analyzerConsumer(){
+	Consumer<ProbeData> analyzerConsumer() {
 		return probeData -> {
-			log.trace("recived probe: {}", probeData);
-			//TODO
-			log.debug("deviatin: {}");
-			//TODO
-			log.debug("deviation data {} send to {}");
+			log.trace("received probe: {}", probeData);
+			long sensorId = probeData.id();
+			Range range = service.getRange(sensorId);
+			double value = probeData.value();
+			double border = Double.NaN;
+			if (value < range.min())
+				border = range.min();
+			else if (value > range.max())
+				border = range.max();
+			if (!Double.isNaN(border)) {
+				double deviation = value - border;
+				log.debug("deviation: {}", deviation);
+				DeviationData dataDeviation = new DeviationData(sensorId, deviation, value, 
+						System.currentTimeMillis());
+				bridge.send(producerBindingName, dataDeviation);
+				log.debug("deviation data {} sent to {}", dataDeviation, producerBindingName);
+			}
 		};
 	}
-
 }

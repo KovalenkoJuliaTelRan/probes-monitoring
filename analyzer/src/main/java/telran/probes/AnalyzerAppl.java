@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,5 +54,10 @@ public class AnalyzerAppl {
 				log.debug("Deviation not detected");
 			}
 		};
+	}
+	
+	@Bean
+	RestTemplate getRestTemplate() {
+		return new RestTemplate();
 	}
 }

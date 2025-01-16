@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.stream.binder.test.InputDestination;
@@ -43,14 +44,14 @@ class AnalyzerServiceTest {
 			RangeProviderClient.MAX_DEFAULT_VALUE );
 	private static final Range RANGE_UPDATED = new Range(MIN_VALUE+10, MAX_VALUE+10);
 	private static final String URL = "http://localhost:8080/sensor/range/";
-	private String updateBindingName = "updateRangeConsumer-in-0";
 	
+	@Value("${app.analyzer.update.range.binding.name}")
+	String updateBindingName;
 	
 	@Autowired
 	InputDestination producer;
 	@Autowired
 	RangeProviderClient service;
-	
 	@MockBean
 	RestTemplate rest;
 	

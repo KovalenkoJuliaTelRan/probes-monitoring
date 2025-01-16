@@ -83,5 +83,6 @@
 		<module>avg-reducer</module>
 		<module>avg-populator</module>
 		<module>sensor-emails-provider</module>
+		<module>sensor-range-provider</module>
 	</modules>
 </project>

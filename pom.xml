@@ -81,5 +81,6 @@
 		<module>analyzer</module>
 		<module>email-notifier</module>
 		<module>avg-reducer</module>
+		<module>avg-populator</module>
 	</modules>
 </project>

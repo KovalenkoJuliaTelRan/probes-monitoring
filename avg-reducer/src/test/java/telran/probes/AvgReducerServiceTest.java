@@ -14,6 +14,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.stream.binder.Binder;
 
 import telran.probes.dto.ProbeData;
 import telran.probes.repo.ProbesList;
@@ -33,6 +34,10 @@ class AvgReducerServiceTest {
 	
 	@MockBean
 	ProbesListRepository repo;
+	
+	@MockBean
+    private Binder<?, ?, ?> binder;
+
 	
 	@BeforeEach
 	void setUp() {

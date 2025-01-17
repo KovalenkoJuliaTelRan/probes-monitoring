@@ -3,6 +3,7 @@ package telran.probes.controller;
 import static telran.probes.messages.ErrorMessages.WRONG_SENSOR_ID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.constraints.Min;
@@ -15,7 +16,11 @@ import telran.probes.service.SensorRangeProviderService;
 public class SensorRangesProviderController {
 	@Autowired
 	SensorRangeProviderService service;
-	@GetMapping("/sensor/range/{id}")
+	
+	@Value("${app.range.provider.path}")
+	String path;
+	
+	@GetMapping("${app.range.provider.path}/{id}")
 	Range getSensorRange(@PathVariable @Min(value = 1, message = WRONG_SENSOR_ID) long id) {
 		Range sensorRange = service.getSensorRange(id);
 		log.debug("sensor range received {}", sensorRange);

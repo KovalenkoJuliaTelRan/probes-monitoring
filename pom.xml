@@ -90,5 +90,6 @@
 		<module>sensor-range-provider</module>
 		<module>admin-console</module>
 		<module>config-server</module>
+		<module>probes</module>
 	</modules>
 </project>

@@ -70,8 +70,10 @@ public class RangeProviderClientImpl implements RangeProviderClient {
 	@Bean
 	Consumer<SensorUpdateData> updateRangeConsumer() {
 		return updateData -> {
-			if (cache.containsKey(updateData.id()))
-				cache.put(updateData.id(), updateData.range());
+			long id = updateData.id();
+			Range range = updateData.range();
+			if (cache.containsKey(id) && range != null)
+				cache.put(id, range);
 		};
 	}
 }

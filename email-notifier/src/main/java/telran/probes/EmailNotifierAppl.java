@@ -59,9 +59,4 @@ public class EmailNotifierAppl {
 				Instant.ofEpochMilli(deviationData.timestamp()).atZone(ZoneId.systemDefault()).toLocalDateTime());
 		return text;
 	}
-	
-	@Bean
-	RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
 }

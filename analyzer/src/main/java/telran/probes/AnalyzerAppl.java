@@ -56,8 +56,4 @@ public class AnalyzerAppl {
 		};
 	}
 	
-	@Bean
-	RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
 }

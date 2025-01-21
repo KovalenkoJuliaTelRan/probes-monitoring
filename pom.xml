@@ -91,5 +91,6 @@
 		<module>admin-console</module>
 		<module>config-server</module>
 		<module>probes</module>
+		<module>gateway</module>
 	</modules>
 </project>

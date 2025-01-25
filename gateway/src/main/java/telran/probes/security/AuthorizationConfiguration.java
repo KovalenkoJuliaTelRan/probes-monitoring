@@ -22,13 +22,13 @@ public class AuthorizationConfiguration
 	String adminNotifierRole;
 	@Value("${app.admin.range.role}")
 	String adminRangeRole;
-	@Value("${app.sensor.range.provider.url}")
+	@Value("${app.range.provider.path}")
 	String rangeSensorUrl;
-	@Value("${app.emails.provider.url}")
+	@Value("${app.emails.provider.path}")
 	String emailsSensorUrl;
-	@Value("${app.admin.range.url}")
+	@Value("${app.admin.console.range.path}")
 	String adminRangeUrl;
-	@Value("${app.admin.emails.url}")
+	@Value("${app.admin.console.emails.path}")
 	String adminEmailsUrl;
 	@Bean
 	SecurityFilterChain configure(HttpSecurity http) throws Exception

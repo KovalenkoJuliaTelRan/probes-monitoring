@@ -38,7 +38,7 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 			mongoTemplate.insert(new SensorRangeDoc(sensorId, range));
 		} catch (DuplicateKeyException e) {
 			log.error("sensor with id: {} already exists in collection {}", sensorId, collectionNameRanges);
-			throw new EntityAlreadyExistsException(SENSOR_ALREADY_EXISTS);
+			throw new EntityAlreadyExistsException("Sensor is already exists");
 		}
 		log.debug("sensor: {} has been added", sensorRange);
 		return sensorRange;
@@ -52,7 +52,7 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 			mongoTemplate.insert(new SensorEmailsDoc(sensorId, emails));
 		} catch (DuplicateKeyException e) {
 			log.error("sensor with id: {} already exists in collection {}", sensorId, collectionNameMails);
-			throw new EntityAlreadyExistsException(SENSOR_ALREADY_EXISTS);
+			throw new EntityAlreadyExistsException("Sensor is already exists");
 		}
 		log.debug("sensor: {} has been added", sensorEmails);
 		return sensorEmails;
